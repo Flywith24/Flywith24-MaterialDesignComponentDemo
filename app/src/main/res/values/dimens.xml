@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_size">180dp</dimen>
+    <dimen name="grid_divider_size">1dp</dimen>
+
+</resources>
