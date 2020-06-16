@@ -33,7 +33,6 @@ open class DemoLandingFragment :
 
     override fun init(savedInstanceState: Bundle?) {
         mBinding.recyclerView.adapter = mAdapter
-
         val list = ArrayList(
             listOf<MultiType>(
                 DemoTitle(getString(R.string.description)),
@@ -56,33 +55,41 @@ open class DemoLandingFragment :
 
     open fun getAdditionalDemos(): List<Demo> = emptyList()
 
-    class DemoLandingAdapter : ListAdapter<MultiType, ViewBindingViewHolder<ViewBinding>>(object :
-        DiffUtil.ItemCallback<MultiType>() {
-        override fun areItemsTheSame(oldItem: MultiType, newItem: MultiType): Boolean =
-            oldItem == newItem
+    inner class DemoLandingAdapter :
+        ListAdapter<MultiType, ViewBindingViewHolder<ViewBinding>>(object :
+            DiffUtil.ItemCallback<MultiType>() {
+            override fun areItemsTheSame(oldItem: MultiType, newItem: MultiType): Boolean =
+                oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: MultiType, newItem: MultiType): Boolean =
-            if (oldItem is Demo && newItem is Demo) {
-                oldItem.title == newItem.title
-            } else if (oldItem is DemoTitle && newItem is DemoTitle) {
-                oldItem.title == newItem.title
-            } else {
-                false
-            }
-    }) {
+            override fun areContentsTheSame(oldItem: MultiType, newItem: MultiType): Boolean =
+                if (oldItem is Demo && newItem is Demo) {
+                    oldItem.title == newItem.title
+                } else if (oldItem is DemoTitle && newItem is DemoTitle) {
+                    oldItem.title == newItem.title
+                } else {
+                    false
+                }
+        }) {
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
         ): ViewBindingViewHolder<ViewBinding> {
+            val demoHolder = ViewBindingViewHolder(
+                ItemDemoBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             return when (viewType) {
                 Const.TYPE_DEMO -> {
-                    ViewBindingViewHolder(
-                        ItemDemoBinding.inflate(
-                            LayoutInflater.from(parent.context),
-                            parent,
-                            false
-                        )
-                    )
+                    demoHolder.viewBinding.root.setOnClickListener {
+                        val item = getItem(demoHolder.bindingAdapterPosition) as Demo
+                        item.createFragment()?.let { fragment ->
+                            replaceFragment(fragment)
+                        }
+                    }
+                    demoHolder
                 }
                 Const.TYPE_DEMO_TITLE -> {
                     ViewBindingViewHolder(
@@ -94,13 +101,7 @@ open class DemoLandingFragment :
                     )
                 }
                 else -> {
-                    ViewBindingViewHolder(
-                        ItemDemoBinding.inflate(
-                            LayoutInflater.from(parent.context),
-                            parent,
-                            false
-                        )
-                    )
+                    demoHolder
                 }
             }
         }

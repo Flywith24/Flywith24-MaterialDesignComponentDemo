@@ -6,19 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.math.MathUtils
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.flywith24.material.demo.bean.HostBean
 import com.flywith24.material.demo.common.BaseFragment
 import com.flywith24.material.demo.common.ViewBindingViewHolder
 import com.flywith24.material.demo.common.setTopDrawable
 import com.flywith24.material.demo.databinding.FragmentHostBinding
 import com.flywith24.material.demo.databinding.ItemHostBinding
-import com.flywith24.material.demo.ui.DemoLandingFragment
 import com.flywith24.material.demo.ui.bottomappbar.BottomAppBarFragment
 import com.flywith24.material.demo.views.GridDividerDecoration
 
@@ -77,10 +73,7 @@ class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host),
 
 
     override fun onItemClick(item: HostBean) {
-        parentFragmentManager.commit {
-            addToBackStack(null)
-            replace(R.id.container, BottomAppBarFragment())
-        }
+        replaceFragment(BottomAppBarFragment())
     }
 
     class HostAdapter(private val listener: OnItemClickListener) :
