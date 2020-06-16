@@ -13,11 +13,5 @@ import com.flywith24.material.demo.ui.DemoLandingFragment
 class BottomAppBarFragment : DemoLandingFragment() {
     override fun getDescription(): String = getString(R.string.bottomappbar_description)
 
-    override fun getDemos(): List<Demo> {
-        return super.getDemos()
-    }
-
-    override fun getAdditionalDemos(): List<Demo> {
-        return super.getAdditionalDemos()
-    }
+    override fun getMainDemo(): Demo = Demo(BottomAppBarMainDemoFragment())
 }

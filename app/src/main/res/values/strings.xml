@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MaterialDemo</string>
     <string name="description">描述</string>
+    <string name="other_demo">其他demo</string>
     <string name="bottomappbar_description">
         bottom app bar 在屏幕底部提供一个停靠的区域，用于执行常见的操作。
         bottom app bar 包括用于主要动作的 Floating Button 和用于辅助动作的 Navigation Bar

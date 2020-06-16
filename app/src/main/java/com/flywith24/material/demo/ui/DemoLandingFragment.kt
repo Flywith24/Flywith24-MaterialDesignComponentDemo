@@ -36,13 +36,15 @@ open class DemoLandingFragment :
 
         val list = ArrayList(
             listOf<MultiType>(
-                DemoTitle("描述"),
+                DemoTitle(getString(R.string.description)),
                 DemoTitle(getDescription())
             )
         )
-        list.addAll(getDemos())
+        getMainDemo()?.let { mainDemo ->
+            list.add(mainDemo)
+        }
         if (getAdditionalDemos().isNotEmpty()) {
-            list.add(DemoTitle("额外demo"))
+            list.add(DemoTitle(getString(R.string.other_demo)))
             list.addAll(getAdditionalDemos())
         }
         mAdapter.submitList(list)
@@ -50,7 +52,7 @@ open class DemoLandingFragment :
 
     open fun getDescription(): String = ""
 
-    open fun getDemos(): List<Demo> = emptyList()
+    open fun getMainDemo(): Demo? = null
 
     open fun getAdditionalDemos(): List<Demo> = emptyList()
 
@@ -109,11 +111,12 @@ open class DemoLandingFragment :
             when (val binding = holder.viewBinding) {
                 is ItemDemoBinding -> {
                     val item = getItem(position) as Demo
-                    binding.title.text = item.title
+                    binding.rowTitle.text = item.title
+                    binding.rowSubtitle.text = item.createFragment()?.javaClass?.simpleName
                 }
                 is ItemDemoTitleBinding -> {
                     val item = getItem(position) as DemoTitle
-                    binding.fragment.text = item.title
+                    binding.rowTitle.text = item.title
                 }
                 else -> {
                     // do nothing
