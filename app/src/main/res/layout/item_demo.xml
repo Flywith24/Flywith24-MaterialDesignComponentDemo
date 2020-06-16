@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/list_horizontal_padding">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/row_icon"
+        android:id="@+id/rowIcon"
         android:layout_width="@dimen/list_icon_size"
         android:layout_height="@dimen/list_icon_size"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,21 +17,21 @@
         app:srcCompat="@drawable/ic_demo_play_circle_outline_vd_theme_24px" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/row_title"
+        android:id="@+id/rowTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/list_text_margin_from_icon"
         android:textAppearance="?attr/textAppearanceBody2"
-        app:layout_constraintStart_toEndOf="@id/row_icon"
-        app:layout_constraintTop_toTopOf="@id/row_icon"
+        app:layout_constraintStart_toEndOf="@id/rowIcon"
+        app:layout_constraintTop_toTopOf="@id/rowIcon"
         tools:text="Demo" />
 
     <TextView
-        android:id="@+id/row_subtitle"
+        android:id="@+id/rowSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?attr/textAppearanceCaption"
-        app:layout_constraintBottom_toBottomOf="@id/row_icon"
-        app:layout_constraintStart_toStartOf="@id/row_title"
+        app:layout_constraintBottom_toBottomOf="@id/rowIcon"
+        app:layout_constraintStart_toStartOf="@id/rowTitle"
         tools:text="MainDemoFragment" />
 </androidx.constraintlayout.widget.ConstraintLayout>
