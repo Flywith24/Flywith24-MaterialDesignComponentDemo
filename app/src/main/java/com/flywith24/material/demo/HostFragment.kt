@@ -6,15 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.math.MathUtils
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.flywith24.material.demo.bean.HostBean
 import com.flywith24.material.demo.common.BaseFragment
+import com.flywith24.material.demo.common.ViewBindingViewHolder
 import com.flywith24.material.demo.common.setTopDrawable
 import com.flywith24.material.demo.databinding.FragmentHostBinding
 import com.flywith24.material.demo.databinding.ItemHostBinding
+import com.flywith24.material.demo.ui.DemoLandingFragment
+import com.flywith24.material.demo.ui.bottomappbar.BottomAppBarFragment
 import com.flywith24.material.demo.views.GridDividerDecoration
 
 /**
@@ -23,9 +28,10 @@ import com.flywith24.material.demo.views.GridDividerDecoration
  * time   19:25
  * description
  */
-class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host) {
+class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host),
+    OnItemClickListener {
 
-    private val mAdapter by lazy { HostAdapter() }
+    private val mAdapter by lazy { HostAdapter(this) }
 
     override fun initBinding(view: View): FragmentHostBinding = FragmentHostBinding.bind(view)
 
@@ -69,34 +75,51 @@ class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host) {
         return MathUtils.clamp(gridSpanCount, 1, 4)
     }
 
-    class HostAdapter : ListAdapter<HostBean, HostAdapter.ViewHolder>(object :
-        DiffUtil.ItemCallback<HostBean>() {
-        override fun areItemsTheSame(oldItem: HostBean, newItem: HostBean): Boolean =
-            oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: HostBean, newItem: HostBean): Boolean =
-            oldItem.title == newItem.title && oldItem.drawableResId == newItem.drawableResId
-    }) {
+    override fun onItemClick(item: HostBean) {
+        parentFragmentManager.commit {
+            addToBackStack(null)
+            replace(R.id.container, BottomAppBarFragment())
+        }
+    }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    class HostAdapter(private val listener: OnItemClickListener) :
+        ListAdapter<HostBean, ViewBindingViewHolder<ItemHostBinding>>(object :
+            DiffUtil.ItemCallback<HostBean>() {
+            override fun areItemsTheSame(oldItem: HostBean, newItem: HostBean): Boolean =
+                oldItem == newItem
+
+            override fun areContentsTheSame(oldItem: HostBean, newItem: HostBean): Boolean =
+                oldItem.title == newItem.title && oldItem.drawableResId == newItem.drawableResId
+        }) {
+
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): ViewBindingViewHolder<ItemHostBinding> {
             val itemBinding =
                 ItemHostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return ViewHolder(itemBinding)
+            val holder = ViewBindingViewHolder(itemBinding)
+            itemBinding.root.setOnClickListener {
+                listener.onItemClick(getItem(holder.bindingAdapterPosition))
+            }
+            return holder
         }
 
 
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(getItem(position))
-        }
-
-        class ViewHolder(
-            private val itemBinding: ItemHostBinding
-        ) :
-            RecyclerView.ViewHolder(itemBinding.root) {
-            fun bind(item: HostBean) {
-                itemBinding.title.text = item.title
-                itemBinding.title.setTopDrawable(item.drawableResId)
+        override fun onBindViewHolder(
+            holder: ViewBindingViewHolder<ItemHostBinding>,
+            position: Int
+        ) {
+            val item = getItem(position)
+            with(holder.viewBinding.title) {
+                text = item.title
+                setTopDrawable(item.drawableResId)
             }
         }
     }
+}
+
+interface OnItemClickListener {
+    fun onItemClick(item: HostBean)
 }
