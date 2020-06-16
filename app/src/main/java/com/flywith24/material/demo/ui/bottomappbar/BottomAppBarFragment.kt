@@ -1,5 +1,6 @@
 package com.flywith24.material.demo.ui.bottomappbar
 
+import com.flywith24.material.demo.R
 import com.flywith24.material.demo.bean.Demo
 import com.flywith24.material.demo.ui.DemoLandingFragment
 
@@ -10,7 +11,7 @@ import com.flywith24.material.demo.ui.DemoLandingFragment
  * description
  */
 class BottomAppBarFragment : DemoLandingFragment() {
-    override fun getDescription(): String = "BottomAppBarFragment"
+    override fun getDescription(): String = getString(R.string.bottomappbar_description)
 
     override fun getDemos(): List<Demo> {
         return super.getDemos()
