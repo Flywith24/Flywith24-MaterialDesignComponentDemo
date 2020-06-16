@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.flywith24.material.demo.bean.HostBean
 import com.flywith24.material.demo.common.BaseFragment
+import com.flywith24.material.demo.common.setTopDrawable
 import com.flywith24.material.demo.databinding.FragmentHostBinding
 import com.flywith24.material.demo.databinding.ItemHostBinding
 import com.flywith24.material.demo.views.GridDividerDecoration
-import org.jetbrains.annotations.NotNull
 
 /**
  * @author Flywith24
@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull
  * description
  */
 class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host) {
+
+    private val mAdapter by lazy { HostAdapter() }
 
     override fun initBinding(view: View): FragmentHostBinding = FragmentHostBinding.bind(view)
 
@@ -38,7 +40,25 @@ class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host) {
                     gridSpanCount
                 )
             )
+            adapter = mAdapter
         }
+
+        val list = listOf(
+            HostBean("Bottom App Bar", R.drawable.ic_bottomappbar),
+            HostBean("Bottom Navigation", R.drawable.ic_bottomnavigation),
+            HostBean("Bottom Sheet", R.drawable.ic_bottomsheet),
+            HostBean("Buttons", R.drawable.ic_button),
+            HostBean("Cards", R.drawable.ic_card),
+            HostBean("Checkbox", R.drawable.ic_checkbox),
+            HostBean("Chips", R.drawable.ic_chips),
+            HostBean("Pickers", R.drawable.ic_dialog),
+            HostBean("Dialogs", R.drawable.ic_dialog),
+            HostBean("Elevation and Shadow", R.drawable.ic_elevation),
+            HostBean("Floating Action Button", R.drawable.ic_fab),
+            HostBean("Fonts", R.drawable.ic_fonts)
+        )
+
+        mAdapter.submitList(list)
     }
 
     private fun calculateGridSpanCount(): Int {
@@ -69,10 +89,13 @@ class HostFragment : BaseFragment<FragmentHostBinding>(R.layout.fragment_host) {
             holder.bind(getItem(position))
         }
 
-        class ViewHolder(private val itemBinding: ItemHostBinding) :
+        class ViewHolder(
+            private val itemBinding: ItemHostBinding
+        ) :
             RecyclerView.ViewHolder(itemBinding.root) {
             fun bind(item: HostBean) {
                 itemBinding.title.text = item.title
+                itemBinding.title.setTopDrawable(item.drawableResId)
             }
         }
     }

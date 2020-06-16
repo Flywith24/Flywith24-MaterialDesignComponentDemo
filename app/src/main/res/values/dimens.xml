@@ -2,5 +2,7 @@
 <resources>
     <dimen name="item_size">180dp</dimen>
     <dimen name="grid_divider_size">1dp</dimen>
+    <dimen name="drawable_margin">20dp</dimen>
+    <dimen name="title_text_size">16sp</dimen>
 
 </resources>
