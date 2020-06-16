@@ -3,7 +3,9 @@ package com.flywith24.material.demo.common
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.viewbinding.ViewBinding
+import com.flywith24.material.demo.R
 
 /**
  * @author Flywith24
@@ -28,6 +30,13 @@ abstract class BaseFragment<T : ViewBinding>(layoutId: Int) : Fragment(layoutId)
     abstract fun initBinding(view: View): T
 
     abstract fun init(savedInstanceState: Bundle?)
+
+    fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.commit {
+            addToBackStack(null)
+            replace(R.id.container, fragment)
+        }
+    }
 
     override fun onDestroyView() {
         _binding = null
