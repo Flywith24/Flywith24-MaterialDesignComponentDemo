@@ -4,5 +4,9 @@
     <dimen name="grid_divider_size">1dp</dimen>
     <dimen name="drawable_margin">20dp</dimen>
     <dimen name="title_text_size">16sp</dimen>
-
+    <dimen name="list_icon_size">40dp</dimen>
+    <dimen name="list_horizontal_padding">16dp</dimen>
+    <dimen name="list_two_line_row_height">72dp</dimen>
+    <dimen name="list_text_margin_from_icon">16dp</dimen>
+    <dimen name="list_text_margin_from_icon_large">24dp</dimen>
 </resources>
