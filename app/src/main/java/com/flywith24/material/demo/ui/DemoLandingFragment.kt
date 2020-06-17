@@ -86,7 +86,7 @@ open class DemoLandingFragment :
                     demoHolder.viewBinding.root.setOnClickListener { view ->
                         val item = getItem(demoHolder.bindingAdapterPosition) as Demo
                         item.createFragment()?.let { fragment ->
-                            replaceFragment(fragment, view, item.title)
+                            replaceFragment(fragment)
                         }
                     }
                     demoHolder
